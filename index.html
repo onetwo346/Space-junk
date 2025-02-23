@@ -3,44 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Junk Salvager - Game</title>
+    <title>Space Junk Salvager</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        #score {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: cyan;
-            text-shadow: 0 0 10px cyan;
-            z-index: 10;
-        }
-        .controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="score">Debris: 0</div>
-    <div class="controls">
-        <button id="pauseButton">PAUSE</button>
-        <button id="stopButton">STOP</button>
-        <button id="restartButton">RESTART</button>
+    <div class="intro-container">
+        <h1>SPACE JUNK SALVAGER</h1>
+        <p class="instructions">
+            TOUCH OR CLICK TO STEER YOUR SHIP<br>
+            COLLECT SPACE DEBRIS<br>
+            SURVIVE THE COSMOS
+        </p>
+        <p class="credits">
+            Designed by Kofi Fosu<br>
+            cosmoscoderr@gmail.com
+        </p>
+        <button id="startButton">TAP TO START GAME</button>
     </div>
-    <canvas id="gameCanvas"></canvas>
-    <script src="game.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
