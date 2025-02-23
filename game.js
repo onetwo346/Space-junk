@@ -1,9 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreDisplay = document.getElementById('score');
-const pauseButton = document.getElementById('pauseButton');
-const stopButton = document.getElementById('stopButton');
-const restartButton = document.getElementById('restartButton');
 
 // Set canvas size
 canvas.width = window.innerWidth;
@@ -22,21 +19,15 @@ const ship = {
 const debris = [];
 const debrisCount = 10;
 let score = 0;
-let isPaused = false;
-let isStopped = false;
-let animationFrameId;
 
-// Initialize debris
-function spawnDebris() {
-    debris.length = 0;
-    for (let i = 0; i < debrisCount; i++) {
-        debris.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: 10,
-            speed: 1
-        });
-    }
+// Spawn debris
+for (let i = 0; i < debrisCount; i++) {
+    debris.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: 10,
+        speed: 1
+    });
 }
 
 // Handle input (touch/mouse)
@@ -54,66 +45,8 @@ canvas.addEventListener('touchmove', (e) => {
     targetY = e.touches[0].clientY;
 }, { passive: false });
 
-// Button controls
-pauseButton.addEventListener('click', () => {
-    if (!isStopped) {
-        isPaused = !isPaused;
-        pauseButton.textContent = isPaused ? 'RESUME' : 'PAUSE';
-        if (!isPaused) update();
-    }
-});
-
-stopButton.addEventListener('click', () => {
-    isStopped = true;
-    isPaused = false;
-    score = 0;
-    scoreDisplay.textContent = `Debris: ${score}`;
-    pauseButton.textContent = 'PAUSE';
-    cancelAnimationFrame(animationFrameId);
-    drawStatic();
-});
-
-restartButton.addEventListener('click', () => {
-    isStopped = false;
-    isPaused = false;
-    score = 0;
-    ship.x = canvas.width / 2;
-    ship.y = canvas.height / 2;
-    scoreDisplay.textContent = `Debris: ${score}`;
-    pauseButton.textContent = 'PAUSE';
-    spawnDebris();
-    update();
-});
-
-// Draw when stopped
-function drawStatic() {
-    ctx.fillStyle = '#0a0a23';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.save();
-    ctx.translate(ship.x, ship.y);
-    ctx.rotate(ship.angle + Math.PI / 2);
-    ctx.fillStyle = 'cyan';
-    ctx.beginPath();
-    ctx.moveTo(0, -ship.size);
-    ctx.lineTo(ship.size / 2, ship.size);
-    ctx.lineTo(-ship.size / 2, ship.size);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-
-    for (const d of debris) {
-        ctx.fillStyle = '#ffaa00';
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
 // Game loop
 function update() {
-    if (isPaused || isStopped) return;
-
     // Clear canvas
     ctx.fillStyle = '#0a0a23';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -128,7 +61,7 @@ function update() {
     }
     ship.angle = Math.atan2(dy, dx);
 
-    // Draw ship
+    // Draw ship (triangle)
     ctx.save();
     ctx.translate(ship.x, ship.y);
     ctx.rotate(ship.angle + Math.PI / 2);
@@ -167,16 +100,13 @@ function update() {
         }
     }
 
-    animationFrameId = requestAnimationFrame(update);
+    requestAnimationFrame(update);
 }
 
-// Start the game
-spawnDebris();
 update();
 
-// Resize canvas
+// Resize canvas on window resize
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    if (!isStopped) spawnDebris(); // Respawn debris on resize if running
 });
