@@ -49,23 +49,6 @@ h1 {
     font-family: 'Orbitron', sans-serif;
 }
 
-.controls button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #00ff00;
-    background: rgba(0, 0, 0, 0.5);
-    border: 2px solid #00ff00;
-    border-radius: 5px;
-    cursor: pointer;
-    text-shadow: 0 0 5px #00ff00;
-    font-family: 'Orbitron', sans-serif;
-    transition: transform 0.2s;
-}
-
-.controls button:hover {
-    transform: scale(1.1);
-}
-
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -82,5 +65,4 @@ h1 {
     .instructions { font-size: 1rem; }
     .credits { font-size: 0.9rem; }
     #startButton { font-size: 1.2rem; padding: 10px 20px; }
-    .controls button { font-size: 0.8rem; padding: 8px 15px; }
 }
